@@ -78,6 +78,7 @@ fn main() {
 
             },
         };
+        url = url.replace("%20", " ");
 
         send_respond_file(return_req, url);
     }
