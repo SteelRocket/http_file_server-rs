@@ -63,7 +63,25 @@ fn send_respond_file(request: tiny_http::Request, url: String){
     )).unwrap();
 }
 
+fn set_directory(){
+    let argument = match std::env::args().nth(1) {
+        Some(s) => s,
+        None => return
+    };
+    let folder = Path::new(&argument);
+
+
+    if folder.exists() && folder.is_dir() {
+        std::env::set_current_dir(folder).unwrap();
+    }else {
+        panic!("The directory given does not exists");
+    }
+}
+
 fn main() {
+
+    set_directory();
+
     let server = tiny_http::Server::http("0.0.0.0:9842").unwrap();
     println!("Now listening on http://127.0.0.1:9842"); // 0.0.0.0 is viewable using 127.0.0.1
 
